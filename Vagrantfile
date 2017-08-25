@@ -5,6 +5,9 @@
 Vagrant.configure("2") do |config|
   config.vm.box     = 'discourse-16.04'
   config.vm.box_url = "https://www.dropbox.com/s/2132770g1e05c6d/discourse.box?dl=1"
+  # Give the VM a clear name so you can easily distinguise it
+  # from other VM's available to Vagrant.
+  config.vm.define "discourse"
 
   # Make this VM reachable on the host network as well, so that other
   # VM's running other browsers can access our dev server.
@@ -16,6 +19,9 @@ Vagrant.configure("2") do |config|
   config.ssh.forward_agent = true
 
   config.vm.provider :virtualbox do |v|
+
+    # Replace confusing auto-generated VirtualBox machine name
+    v.name = "discourse"
     # This setting gives the VM 1024MB of RAM instead of the default 384.
     v.customize ["modifyvm", :id, "--memory", [ENV['DISCOURSE_VM_MEM'].to_i, 1024].max]
 
